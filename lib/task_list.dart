@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/task_provider.dart';
+import 'package:todo_app/task_dialog.dart';
 
 class TaskList extends StatefulWidget {
   const TaskList({super.key});
@@ -11,11 +12,31 @@ class TaskList extends StatefulWidget {
 }
 
 class _TaskListState extends State<TaskList> {
+  void _createTask() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: TaskDialog(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Liste des tâches")),
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _createTask();
+        },
+        child: Icon(Icons.add),
+      ),
       body: Consumer<TaskProvider>(
         builder: (context, value, child) {
           return Column(
