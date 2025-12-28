@@ -34,4 +34,9 @@ class TaskProvider extends ChangeNotifier {
     // Signaler une modification
     notifyListeners();
   }
+
+  void toggleTask(Task task) {
+    task.completed = !task.completed;
+    notifyListeners();
+  }
 }
